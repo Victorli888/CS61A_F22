@@ -1,5 +1,8 @@
 # https://inst.eecs.berkeley.edu/~cs61a/sp21/hw/hw01/
 
+#Global Methods:
+square = lambda x: x*x
+
 
 def a_plus_abs_b(a, b):
     """Return a+abs(b), but without calling abs.
@@ -14,9 +17,9 @@ def a_plus_abs_b(a, b):
     ['return f(a, b)']
     """
     if b < 0:
-        f = lambda x,y: x-y
+        f = lambda x, y: x-y
     else:
-        f = lambda x,y: y+x
+        f = lambda x, y: y+x
     return f(a, b)
 
 
@@ -38,7 +41,11 @@ def two_of_three(x, y, z):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(two_of_three)).body[0].body]
     ['Expr', 'Return']
     """
-    return _____
+    # arr = (x,y,z)
+    # largestTwo = sorted(arr)[:2]
+    # squaredTwo = map(square, largestTwo)
+    # summedTwo = sum(squaredTwo)
+    return sum(map(square, sorted((x, y, z))[:2]))
 
 
 def largest_factor(n):
@@ -51,7 +58,12 @@ def largest_factor(n):
     >>> largest_factor(13) # factor is 1 since 13 is prime
     1
     """
-    "*** YOUR CODE HERE ***"
+    """
+    Notes: if x is a factor of n then n%x == 0
+    String Comprehension syntax: 
+    newlist = [(expression) for (item) in (iterable) if (condition == True)]
+    """
+    return [x for x in range(1, n) if n % x == 0][-1]
 
 
 def if_function(condition, true_result, false_result):
@@ -98,20 +110,21 @@ def with_if_function():
 
 
 def cond():
-    "*** YOUR CODE HERE ***"
+    return False
 
 
 def true_func():
-    "*** YOUR CODE HERE ***"
+    print("Welcome to")
 
 
 def false_func():
-    "*** YOUR CODE HERE ***"
+    print("61A")
 
 
 def hailstone(n):
     """Print the hailstone sequence starting at n and return its
     length.
+
 
     >>> a = hailstone(10)
     10
@@ -123,5 +136,21 @@ def hailstone(n):
     1
     >>> a
     7
+
+    Pick a positive integer n as the start.
+    If n is even, divide it by 2.
+    If n is odd, multiply it by 3 and add 1.
+    Continue this process until n is 1.
     """
     "*** YOUR CODE HERE ***"
+
+    count = 1
+    while n != 1:
+        print(n)
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3 * n + 1
+        count += 1
+    print(n)  # Exits the while loop and prints that n = 1
+    return count

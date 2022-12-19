@@ -3,7 +3,7 @@
 from utils import lower, split, remove_punctuation, lines_from_file
 from ucb import main, interact, trace
 from datetime import datetime
-from operator import eq
+from operator import eq, ne
 
 
 ###########
@@ -152,7 +152,15 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     'testing'
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    # Don't Auto-correct Scenario: typed_word is correct
+    if typed_word in word_list:
+        return typed_word
+
+    # with our diff_function, find the word in our wordlist with the least differences
+    ans = min(word_list, key=lambda w: diff_function(typed_word, w, limit))
+    if diff_function(typed_word, ans, limit) > limit:
+        return typed_word
+    return ans
     # END PROBLEM 5
 
 
@@ -179,40 +187,43 @@ def feline_fixes(typed, source, limit):
     5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    return sum(map(ne, typed, source)) + abs(len(typed) - len(source))
+    assert False, "Remove this line"
     # END PROBLEM 6
 
 
 def minimum_mewtations(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL.
-    This function takes in a string START, a string GOAL, and a number LIMIT.
-    Arguments:
-        start: a starting word
-        goal: a goal word
-        limit: a number representing an upper bound on the number of edits
-    >>> big_limit = 10
-    >>> minimum_mewtations("cats", "scat", big_limit)       # cats -> scats -> scat
-    2
-    >>> minimum_mewtations("purng", "purring", big_limit)   # purng -> purrng -> purring
-    2
-    >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
-    3
-    """
-    assert False, 'Remove this line'
-    if ______________:  # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-    elif ___________:  # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+        This function takes in a string START, a string GOAL, and a number LIMIT.
+        Arguments:
+            start: a starting word
+            goal: a goal word
+            limit: a number representing an upper bound on the number of edits
+        >>> big_limit = 10
+        >>> minimum_mewtations("cats", "scat", big_limit)       # cats -> scats -> scat
+        2
+        >>> minimum_mewtations("purng", "purring", big_limit)   # purng -> purrng -> purring
+        2
+        >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
+        3
+        """
+    # Case 1: If either strings are empty use the bigger word
+    if start == "" or goal == "":  # Fill in the condition
+        return max(len(start), len(goal))
+    # Case 2: when our limit is 0, 1 or 0
+    elif limit == 0:  # Feel free to remove or add additional cases
+        return int(start != goal)
+    # Case 3: when both our strings match return 0 for number of edits needed
+    elif start == goal:
+        return 0
+    elif start[0] == goal[0]:
+        return minimum_mewtations(start[1:], goal[1:], limit)
     else:
-        add = ...  # Fill in these lines
-        remove = ...
-        substitute = ...
+        add = 1 + minimum_mewtations(start, goal[1:], limit - 1)
+        delete = 1 + minimum_mewtations(start[1:], goal, limit - 1)
+        swap = 1 + minimum_mewtations(start[1:], goal[1:], limit - 1)
         # BEGIN
-        "*** YOUR CODE HERE ***"
+        return min(add, min(delete, swap))
         # END
 
 

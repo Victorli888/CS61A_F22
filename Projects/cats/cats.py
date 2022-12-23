@@ -3,7 +3,8 @@
 from utils import lower, split, remove_punctuation, lines_from_file
 from ucb import main, interact, trace
 from datetime import datetime
-from operator import eq, ne
+from operator import eq, ne, sub
+from collections import defaultdict
 
 
 ###########
@@ -265,7 +266,16 @@ def report_progress(typed, prompt, user_id, upload):
     0.2
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    total_count = 0
+    for item in map(eq, typed, prompt):
+        if item:
+            total_count += 1
+        else:
+            break
+    progress = total_count/len(prompt)
+    upload({"id": user_id, "progress": progress})
+    return progress
+
     # END PROBLEM 8
 
 
@@ -287,7 +297,7 @@ def time_per_word(words, times_per_player):
     [[6, 3, 6, 2], [10, 6, 1, 2]]
     """
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+    return match(words, [list(map(sub, p[1:], p)) for p in times_per_player])
     # END PROBLEM 9
 
 
@@ -309,7 +319,12 @@ def fastest_words(match):
     player_indices = range(len(get_all_times(match)))  # contains an *index* for each player
     word_indices = range(len(get_all_words(match)))    # contains an *index* for each word
     # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
+    player_list = [[]for k in player_indices]
+
+    for i in word_indices:
+        times = [time(match, j, i) for j in player_indices]
+        player_list[times.index(min(times))].append(get_word(match, i))
+    return player_list
     # END PROBLEM 10
 
 

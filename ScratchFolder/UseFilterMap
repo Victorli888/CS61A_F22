@@ -1,0 +1,23 @@
+"""
+The filter() function extracts elements from an iterable (list, tuple etc.)
+for which a function returns True.
+
+map() function returns a map object(which is an iterator) of the results after
+applying the given function to each item of a given iterable (list, tuple etc.)
+"""
+
+def is_even(num):
+    if num % 2 == 0:
+        return True
+    return False
+
+test_numbers = [0,1,2,3,4,5,6,7,8,9,10]
+
+#test_numbers = list(filter(is_even, test_numbers))
+test_numbers = filter(is_even, test_numbers)
+
+if isinstance(test_numbers, filter):
+    print("we expected an array but got a filter object instead")
+else:
+    print(test_numbers)
+

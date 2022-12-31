@@ -1,0 +1,43 @@
+def cascade(n):
+    if n > 10:
+        print(n)
+        cascade(n//10)
+    print(n)
+
+def cascade2(n):
+    if n < 10:
+        print(n)
+    else:
+        print(n)
+        cascade2(n//10)
+        print(n)
+
+def cascade3(n):
+    if n > 10:
+        print(n)
+        cascade3(n//10)
+        print(n)
+    else:
+        print(n)
+
+def badCascade(n):
+    if n > 10:
+        print(n)
+        badCascade(n//10)
+    else:
+        print(n)
+
+"""Why is badCascade Bad?
+At the end of each frame in our call-stack
+
+
+"""
+
+
+cascade(54321)
+print("\n")
+cascade2(54321)
+print("\n")
+cascade3(54321)
+print("\n")
+badCascade(54321)

@@ -1,0 +1,16 @@
+def fibby(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    return fibby(n-1) + fibby(n-2)
+
+print(fibby(1))
+print(fibby(5))
+
+"""
+Why is this method so take so long to calculate fibby(35)?
+The way this method is computed follows a recursive tree and repeats calls that have
+already been done. For example calling fibby(5) calls fibby(4) & fibby(3) and both of
+those will call fibby(2). This becomes taxing when we have large calls like fibby(35)
+"""

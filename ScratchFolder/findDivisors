@@ -1,0 +1,8 @@
+def find_divisors(n):
+    return [1] + [x for x in range(2,n+1) if n % x == 0]
+
+calculations = [find_divisors(9), find_divisors(25), find_divisors(100)]
+
+
+for item in calculations:
+    print(item)
